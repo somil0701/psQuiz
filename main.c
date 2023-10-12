@@ -30,7 +30,7 @@ int digitsInBalance(int user_balance)
 }
 
 // Function to Operate Audience Poll Lifeline
-char lifelineAudiencePoll(char correct_option)
+char lifelineAudiencePoll(question arr[])
 {
     srand(time(0));
     char arr_of_options[] = {'A', 'B', 'C', 'D'};
@@ -41,14 +41,16 @@ char lifelineAudiencePoll(char correct_option)
 
     chance_factor += random_number;
     if (chance_factor > 90)
-        return correct_option;
+        return arr->correct_option;
 
     else
         return random_option;
 }
 
+// Function to User Audiencee Poll
+
 // Function to Operate 50:50 Lifeline
-char *lifeline5050(char correct_option)
+char *lifeline5050(question arr[])
 {
     static char random_options[2];
     char arr_of_options[] = {'A', 'B', 'C', 'D'};
@@ -59,7 +61,7 @@ generateAgain:
     random_number2 = rand()%4;
 
 
-    if(arr_of_options[random_number] == correct_option || arr_of_options[random_number2] == correct_option)
+    if(arr_of_options[random_number] == arr->correct_option || arr_of_options[random_number2] == arr->correct_option)
         goto generateAgain;
     
     if (random_number != random_number2){
@@ -103,19 +105,19 @@ void printStatusboard(int user_balance, int user_balance_length, int user_audien
 }
 
 // Function to Print a Set of Questions
-void printQuestions(char *question_content, char correct_option, char *option_A, char *option_B, char *option_C, char *option_D)
+void printQuestions(question arr[])
 {
-    printf("Q: %s?\n", question_content);
-    printf("(A) %s\n", option_A);
-    printf("(B) %s\n", option_B);
-    printf("(C) %s\n", option_C);
-    printf("(D) %s\n", option_D);
+    printf("Q: %s?\n", arr->content);
+    printf("(A) %s\n", arr->option_A);
+    printf("(B) %s\n", arr->option_B);
+    printf("(C) %s\n", arr->option_C);
+    printf("(D) %s\n", arr->option_D);
 }
 
 // Function to Check The User's Answer
-bool answerChecker(char correct_option, char user_input)
+bool answerChecker(question arr[], char user_input)
 {
-    if (user_input == correct_option)
+    if (user_input == arr->correct_option)
         return true;
     else
         return false;
@@ -127,7 +129,6 @@ int main()
     // Declaring Variables
 
     starting:
-    question question_1, question_2, question_3, question_4, question_5;
     int user_balance = 0;
     int user_score = 0;
     int user_audiencepoll = 1;
@@ -139,40 +140,11 @@ int main()
 
     // Assigning Questions and Their Options
 
-    strcpy(question_1.content, "Who was Napolean Bonaparte");
-    strcpy(question_1.option_A, "Hero");
-    strcpy(question_1.option_B, "Villan");
-    strcpy(question_1.option_C, "Clown");
-    strcpy(question_1.option_D, "Weeb");
-    question_1.correct_option = 'C';
-
-    strcpy(question_2.content, "Who was Uzumaki Naruto");
-    strcpy(question_2.option_A, "Hero");
-    strcpy(question_2.option_B, "Villan");
-    strcpy(question_2.option_C, "Clown");
-    strcpy(question_2.option_D, "Weeb");
-    question_2.correct_option = 'A';
-
-    strcpy(question_3.content, "Who was Eren Yeager");
-    strcpy(question_3.option_A, "Hero");
-    strcpy(question_3.option_B, "Villan");
-    strcpy(question_3.option_C, "Clown");
-    strcpy(question_3.option_D, "Weeb");
-    question_3.correct_option = 'B';
-
-    strcpy(question_4.content, "Who was Kurosaki Ichigo");
-    strcpy(question_4.option_A, "Hero");
-    strcpy(question_4.option_B, "Villan");
-    strcpy(question_4.option_C, "Clown");
-    strcpy(question_4.option_D, "Weeb");
-    question_4.correct_option = 'A';
-
-    strcpy(question_5.content, "Who was Luffy D Monkey");
-    strcpy(question_5.option_A, "Hero");
-    strcpy(question_5.option_B, "Villan");
-    strcpy(question_5.option_C, "Clown");
-    strcpy(question_5.option_D, "Weeb");
-    question_5.correct_option = 'A';
+    question question_1[5] = {"Who was Napolean BonaParte",  'C', "Hero", "Villian", "Clown", "Weeb"};
+    question question_2[5] = {"Who was Uzumaki Naruto",  'A', "Hero", "Villian", "Clown", "Weeb"};
+    question question_3[5] = {"Who was Who was Eren Yeager",  'B', "Hero", "Villian", "Clown", "Weeb"};
+    question question_4[5] = {"Who was Kurosaki Ichigo",  'A', "Hero", "Villian", "Clown", "Weeb"};
+    question question_5[5] = {"Who was Monkey D Luffy",  'A', "Hero", "Villian", "Clown", "Weeb"};
 
 // Loop Starts Here
 
@@ -191,23 +163,23 @@ int main()
         switch (user_score)
         {
         case 0:
-            printQuestions(question_1.content, question_1.correct_option, question_1.option_A, question_1.option_B, question_1.option_C, question_1.option_D);
+            printQuestions(question_1);
             break;
 
         case 1:
-            printQuestions(question_2.content, question_2.correct_option, question_2.option_A, question_2.option_B, question_2.option_C, question_2.option_D);
+            printQuestions(question_2);
             break;
 
         case 2:
-            printQuestions(question_3.content, question_3.correct_option, question_3.option_A, question_3.option_B, question_3.option_C, question_3.option_D);
+            printQuestions(question_3);
             break;
 
         case 3:
-            printQuestions(question_4.content, question_4.correct_option, question_4.option_A, question_4.option_B, question_4.option_C, question_4.option_D);
+            printQuestions(question_4);
             break;
 
         case 4:
-            printQuestions(question_5.content, question_5.correct_option, question_5.option_A, question_5.option_B, question_5.option_C, question_5.option_D);
+            printQuestions(question_5);
             break;
 
         default:
@@ -251,35 +223,35 @@ int main()
             {
             case 0:
                 printf("The majority of the audience vouches for Option %c\n",
-                       lifelineAudiencePoll(question_1.correct_option));
+                       lifelineAudiencePoll(question_1));
                 user_audiencepoll = 0;
                 user_input2 = '\0';
                 goto takinginputagain;
                 break;
             case 1:
                 printf("The majority of the audience vouches for Option %c\n",
-                       lifelineAudiencePoll(question_2.correct_option));
+                       lifelineAudiencePoll(question_2));
                 user_audiencepoll = 0;
                 user_input2 = '\0';
                 goto takinginputagain;
                 break;
             case 2:
                 printf("The majority of the audience vouches for Option %c\n",
-                       lifelineAudiencePoll(question_3.correct_option));
+                       lifelineAudiencePoll(question_3));
                 user_audiencepoll = 0;
                 user_input2 = '\0';
                 goto takinginputagain;
                 break;
             case 3:
                 printf("The majority of the audience vouches for Option %c\n",
-                       lifelineAudiencePoll(question_4.correct_option));
+                       lifelineAudiencePoll(question_4));
                 user_audiencepoll = 0;
                 user_input2 = '\0';
                 goto takinginputagain;
                 break;
             case 4:
                 printf("The majority of the audience vouches for Option %c\n",
-                       lifelineAudiencePoll(question_5.correct_option));
+                       lifelineAudiencePoll(question_5));
                 user_audiencepoll = 0;
                 user_input2 = '\0';
                 goto takinginputagain;
@@ -296,8 +268,8 @@ int main()
             switch (user_score)
             {
             case 0:
-                arr_of_incorrect_options[0] = *lifeline5050(question_1.correct_option);
-                arr_of_incorrect_options[1] = *(lifeline5050(question_1.correct_option) + 1);
+                arr_of_incorrect_options[0] = *lifeline5050(question_1);
+                arr_of_incorrect_options[1] = *(lifeline5050(question_1) + 1);
                 printf("Options which are incorrect are: %c, %c\n", arr_of_incorrect_options[0], arr_of_incorrect_options[1]);
                 user_5050 = 0;
                 user_input2 = '\0';
@@ -305,8 +277,8 @@ int main()
                 break;
 
             case 1:
-                arr_of_incorrect_options[0] = *lifeline5050(question_2.correct_option);
-                arr_of_incorrect_options[1] = *(lifeline5050(question_2.correct_option) + 1);
+                arr_of_incorrect_options[0] = *lifeline5050(question_2);
+                arr_of_incorrect_options[1] = *(lifeline5050(question_2) + 1);
                 printf("Options which are incorrect are: %c, %c\n", arr_of_incorrect_options[0], arr_of_incorrect_options[1]);
                 user_5050 = 0;
                 user_input2 = '\0';
@@ -314,8 +286,8 @@ int main()
                 break;
 
             case 2:
-                arr_of_incorrect_options[0] = *lifeline5050(question_3.correct_option);
-                arr_of_incorrect_options[1] = *(lifeline5050(question_3.correct_option) + 1);
+                arr_of_incorrect_options[0] = *lifeline5050(question_3);
+                arr_of_incorrect_options[1] = *(lifeline5050(question_3) + 1);
                 printf("Options which are incorrect are: %c, %c\n", arr_of_incorrect_options[0], arr_of_incorrect_options[1]);
                 user_5050 = 0;
                 user_input2 = '\0';
@@ -323,8 +295,8 @@ int main()
                 break;
 
             case 3:
-                arr_of_incorrect_options[0] = *lifeline5050(question_4.correct_option);
-                arr_of_incorrect_options[1] = *(lifeline5050(question_4.correct_option) + 1);
+                arr_of_incorrect_options[0] = *lifeline5050(question_4);
+                arr_of_incorrect_options[1] = *(lifeline5050(question_4) + 1);
                 printf("Options which are incorrect are: %c, %c\n", arr_of_incorrect_options[0], arr_of_incorrect_options[1]);
                 user_5050 = 0;
                 user_input2 = '\0';
@@ -332,8 +304,8 @@ int main()
                 break;
 
             case 4:
-                arr_of_incorrect_options[0] = *lifeline5050(question_5.correct_option);
-                arr_of_incorrect_options[1] = *(lifeline5050(question_5.correct_option) + 1);
+                arr_of_incorrect_options[0] = *lifeline5050(question_5);
+                arr_of_incorrect_options[1] = *(lifeline5050(question_5) + 1);
                 printf("Options which are incorrect are: %c, %c\n", arr_of_incorrect_options[0], arr_of_incorrect_options[1]);
                 user_5050 = 0;
                 user_input2 = '\0';
@@ -350,14 +322,14 @@ int main()
         switch (user_score)
         {
         case 0:
-            if (answerChecker(question_1.correct_option, toupper(user_input)))
+            if (answerChecker(question_1, toupper(user_input)))
             {
                 printf("Correct Answer! :)\n");
                 user_score++;
                 if (user_balance == 0)
                     user_balance = 2000;
                 else
-                    user_balance = user_balance * 2;
+                    user_balance * 2;
             }
 
             else
@@ -370,7 +342,7 @@ int main()
             break;
 
         case 1:
-            if (answerChecker(question_2.correct_option, toupper(user_input)))
+            if (answerChecker(question_2, toupper(user_input)))
             {
                 printf("Correct Answer! :)\n");
                 user_score++;
@@ -390,7 +362,7 @@ int main()
             break;
 
         case 2:
-            if (answerChecker(question_3.correct_option, toupper(user_input)))
+            if (answerChecker(question_3, toupper(user_input)))
             {
                 printf("Correct Answer! :)\n");
                 user_score++;
@@ -410,7 +382,7 @@ int main()
             break;
 
         case 3:
-            if (answerChecker(question_4.correct_option, toupper(user_input)))
+            if (answerChecker(question_4, toupper(user_input)))
             {
                 printf("Correct Answer! :)\n");
                 user_score++;
@@ -430,7 +402,7 @@ int main()
             break;
 
         case 4:
-            if (answerChecker(question_5.correct_option, toupper(user_input)))
+            if (answerChecker(question_5, toupper(user_input)))
             {
                 printf("Correct Answer! :)\n");
                 user_score++;
